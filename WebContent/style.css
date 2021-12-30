@@ -1,0 +1,95 @@
+#sis_header {
+	
+	height: 200px;
+	width: 100%;
+}
+
+#sis_container {
+	
+	height: 500px;
+	width: 100%;
+}
+
+#sis_footer {
+	
+	
+	height: 0px;
+	width: 100%;
+}
+
+a {
+	font-size: 30px;
+}
+ 
+
+/*tr:HOVER{
+  background: lime;
+  font-size: 20px;
+}*/
+
+th{
+text-transform: capitalize;
+  font-size: 30px;
+}
+
+ul {
+	/* to Show right side 
+	But here all the content show in top down model
+	*/
+	float: left;
+	list-style-type: nome;
+	/* For down our content. like About,contactUs,.. */
+	margin-top: 30px;
+	/*background: #00ff80;*/
+	color: white;
+}
+
+ul li {
+	/* use this line to show in line */
+	display: inline-block;
+}
+
+ul li a {
+	/*Here we change our content(About,Services,Contact..) bgcolor ,color, padding border*/
+	/*background: black;*/
+	text-decoration: none;
+	color: #ff0000;
+	padding: 7px 15px;
+	border: 1px solid turquoise;
+	/* For Smothly Hover */
+	transition:0.9s ease;
+	
+}
+
+ul li a:hover {
+	background: black;
+	color: blue;
+}
+
+/*For Active Class because we are in Home Page*/
+ul li.active a{
+	background: black;
+	color: blue;
+}
+
+.loginbuton{
+		text-decoration: none;
+	color: #030344;
+	padding: 3px 15px;
+	border: 1px solid transparent;
+
+	}
+	.loginbuton:hover{
+		background: black;
+	color: #ff0000;
+
+	}
+
+.input-gap{
+	margin: 5px 0px;
+}
+
+
+
+
+

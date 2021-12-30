@@ -1,0 +1,120 @@
+package sis.com.controller;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import sis.com.bo.User;
+
+/**
+ * Servlet implementation class AdminServlet
+ */
+public class AdminServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+  
+
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	
+		String loginId = request.getParameter("login_id");//login or email 
+		String loginPassword = request.getParameter("login_password"); 
+		System.out.println(loginId);
+		System.out.println(loginPassword);
+
+		  User loginUser  = null;
+		  //validate in dabase
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+				 //declare required type 
+			String user="system";
+			String password="root";//if you password id diff change it
+			String url  = "jdbc:oracle:thin:@localhost:1521:XE";	
+		 
+			StringBuilder errorCode = new StringBuilder("");
+			 try{
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				con  = DriverManager.getConnection(url,user,password);
+				stmt  = con.createStatement();
+				 
+				String sql="select *from Admin_user where email='"+loginId+"' AND  password='"+loginPassword+"'"; 
+		     	 rs  =  stmt.executeQuery(sql);
+				if( rs.next() ){
+			          
+			          String email  = rs.getString("email");
+			          String roll  = rs.getString("roll");
+			          String name  = rs.getString("name");
+					  String mobile  = rs.getString("mobile");
+					 
+					  loginUser= new User();
+					  
+					  loginUser.setName(name);
+					  loginUser.setLoginEmail(email);
+					  loginUser.setLoginPassword(loginPassword);
+					  loginUser.setMobile(mobile);
+					//  loginUser.setSemester(semester);
+					 // loginUser.setBranch(branch);
+				}
+				
+			 }catch(ClassNotFoundException e){
+			   errorCode.append("Driver Not Loaded....." + e.getMessage());
+			 }catch(SQLException e){
+			   errorCode.append("DB ERROR : " +e.getMessage());
+			   e.printStackTrace();
+			 }catch(Exception e){
+			   errorCode.append("Other ERROR " + e.getMessage());
+			 }finally{
+			     //release resoucer
+			      if(con!=null){
+				          try{
+						     con.close();  //#5 close connection 
+							}catch(SQLException e){
+								errorCode.append("DB Con CLosing ERROR : "+ e.getMessage());
+						  }//catch
+				  }//if
+			 }//finally
+		  
+			 System.out.println(loginUser);
+				//System.out.println(loginPassword);
+
+		//if user found means login successfull
+			 //if user not found invalid user/password 
+
+			 if(loginUser!=null){
+				 //if user found means login successfull
+			    //create session object
+				 HttpSession session = request.getSession();
+				//add required attribute for next service
+				 session.setAttribute("user", loginUser);
+				 //then send to main service page
+				 //project page 
+				 request.getRequestDispatcher("admin_home.jsp").forward(request, response);
+				 // String projectPath = getServletContext().getContextPath();
+				 //response.sendRedirect(projectPath);
+			 }else{
+				 errorCode.append("invalide login id or password");
+				 
+				 request.setAttribute("loginError", errorCode.toString());
+				 request.getRequestDispatcher("admin_login.jsp").forward(request, response);
+					
+			 }
+		
+		}
+
+}
+
+
