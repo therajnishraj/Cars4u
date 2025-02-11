@@ -44,13 +44,15 @@ System.out.println(loginPassword);
 		Statement stmt = null;
 		ResultSet rs = null;
 				 //declare required type 
-			String user="system";
-			String password="root";//if you password id diff change it
-			String url  = "jdbc:oracle:thin:@localhost:1521:XE";	
-		 
+			String user="postgres";
+			String password="postgres";//if you password id diff change it
+//			String url  = "jdbc:oracle:thin:@localhost:1521:XE";
+			String url  = "jdbc:postgresql://localhost:5432/postgres";
+
 			StringBuilder errorCode = new StringBuilder("");
 			 try{
-				Class.forName("oracle.jdbc.driver.OracleDriver");
+//				Class.forName("oracle.jdbc.driver.OracleDriver");
+				Class.forName("org.postgresql.Driver");
 				con  = DriverManager.getConnection(url,user,password);
 				stmt  = con.createStatement();
 				 
