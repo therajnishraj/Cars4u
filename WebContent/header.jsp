@@ -54,10 +54,10 @@
 		<!-- Home link in active mode.. -->
 			<li><a href="#">Home</a></li>
 			<li><a href="admin_login.jsp" >Admin</a></li>
-			<li><a href="login_form.jsp" target="_blank">Login</a></li>
-			<li><a href="signup_registration.jsp"  target="_blank">SignUp</a></li>
-			<li><a href="#" target="_blank" target="_blank">Contact-Us</a></li>
-			<li><a href="#" target="_blank">About-Us</a></li>
+			<li><a href="login_form.jsp" >Login</a></li>
+			<li><a href="signup_registration.jsp"  >SignUp</a></li>
+			<li><a href="#" >Contact-Us</a></li>
+			<li><a href="#" >About-Us</a></li>
 		</ul>	
        
 	   </div>
